@@ -23,7 +23,7 @@ cd "${NIMBUS_DIR}"
 # Setup Nimbus build system environment variables
 source env.sh
 
-./env.sh nim c -o:"$NIMBUS_BIN" $NIMFLAGS beacon_chain/beacon_node
+./env.sh nim c -o:"$NIMBUS_BIN" $NIMFLAGS beacon_chain/nimbus_beacon_node
 
 PORT=$(printf '5%04d' 0)
 
@@ -48,6 +48,7 @@ if [ "$MULTINET_POD_NAME" == "nimbus-0" ]; then
 fi
 
 $NIMBUS_BIN \
+  --network="${DATA_DIR}/nimbus/network.json" \
   --log-level=$LOG_LEVEL \
   --log-file="$SIM_ROOT/nimbus.log" \
   --data-dir:$NIMBUS_DATA_DIR \

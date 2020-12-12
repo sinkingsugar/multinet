@@ -31,4 +31,4 @@ cd "${NIMBUS_DIR}"
 # Setup Nimbus build system environment variables
 source env.sh
 
-./env.sh nim c -o:"$NIMBUS_BIN" $NIMFLAGS beacon_chain/beacon_node
+./env.sh nim c -o:"$NIMBUS_BIN" $NIMFLAGS beacon_chain/nimbus_beacon_node

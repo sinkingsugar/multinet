@@ -243,6 +243,8 @@ $NIMBUS_BIN \
   createTestnet \
   --deposits-file=$DEPOSITS_DIR/deposits.json \
   --total-validators=$NUM_VALIDATORS \
+  --netkey-file=network_key.json \
+  --insecure-netkey-password=true \
   --output-genesis="${TESTNET_DIR}/genesis.ssz" \
   --output-bootstrap-file="${TESTNET_DIR}/bootstrap_nodes.txt" \
   --bootstrap-address=$IP_ADDRESS \
@@ -260,3 +262,19 @@ echo 0 > $TESTNET_DIR/deposit_contract_block.txt
 echo 0 > $TESTNET_DIR/deploy_block.txt
 echo 0x0000000000000000000000000000000000000000 > $TESTNET_DIR/deposit_contract.txt
 cp "${SIM_ROOT}/${SPEC_VERSION}.yaml" "$TESTNET_DIR/config.yaml"
+
+NETWORK_METADATA_FILE="${DATA_DIR}/nimbus/network.json"
+
+echo Wrote $NETWORK_METADATA_FILE:
+tee "$NETWORK_METADATA_FILE" <<EOF
+{
+  "runtimePreset": {
+    "MIN_GENESIS_ACTIVE_VALIDATOR_COUNT": ${NUM_VALIDATORS},
+    "MIN_GENESIS_TIME": 0,
+    "GENESIS_DELAY": 10,
+    "GENESIS_FORK_VERSION": "0x00000000"
+  },
+  "depositContractAddress": "0x0000000000000000000000000000000000000000",
+  "depositContractDeployedAt": "0"
+}
+EOF
